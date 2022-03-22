@@ -4,9 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
-import ru.liga.CSV_Reader.CSV_Parser;
+import ru.liga.CSV_Reader.CSVParser;
 import ru.liga.Input.*;
-import ru.liga.Repository.In_Memory_Currency_Repository;
+import ru.liga.Repository.InMemoryCurrencyRepository;
 
 @Slf4j
 public class App {
@@ -17,7 +17,7 @@ public class App {
     public static void main(String[] args) {
         try {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
-            Bot bot = new Bot(BOT_NAME, BOT_TOKEN, new In_Memory_Currency_Repository(new CSV_Parser()));
+            Bot bot = new Bot(BOT_NAME, BOT_TOKEN, new InMemoryCurrencyRepository(new CSVParser()));
             botsApi.registerBot(bot);
         } catch (TelegramApiException e) {
             log.error("Error in psvm: ", e);

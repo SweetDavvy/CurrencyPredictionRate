@@ -1,6 +1,6 @@
 package ru.liga.Сurrency;
 import org.junit.jupiter.api.Test;
-import ru.liga.Type.Currency_Types;
+import ru.liga.Type.CurrencyTypes;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -11,7 +11,7 @@ class CurrencyRateTest {
 
     @Test
     void testToString() {
-        Currency_Rate rate = new Currency_Rate(LocalDate.parse("21.02.2022", DateTimeFormatter.ofPattern("dd.MM.yyyy")), Currency_Types.EUR, 87.5);
+        CurrencyRate rate = new CurrencyRate(LocalDate.parse("21.02.2022", DateTimeFormatter.ofPattern("dd.MM.yyyy")), CurrencyTypes.EUR, 87.5);
         assertThat(rate.toString()).hasToString("Пн 21.02.2022 - 87,50");
     }
 }

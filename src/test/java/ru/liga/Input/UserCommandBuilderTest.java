@@ -2,9 +2,9 @@ package ru.liga.Input;
 
 import org.junit.jupiter.api.Test;
 import ru.liga.Exception.*;
-import ru.liga.Type.Algorithm_Types;
-import ru.liga.Type.Currency_Types;
-import ru.liga.Type.Error_Messages;
+import ru.liga.Type.AlgorithmTypes;
+import ru.liga.Type.CurrencyTypes;
+import ru.liga.Type.ErrorMessages;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -18,118 +18,118 @@ class UserCommandBuilderTest {
     @Test
     void whenInputValid() {
         String input = "rate USD -date tomorrow -alg linear";
-        User_Command actual = User_Command.createFromString(input);
+        UserCommand actual = UserCommand.createFromString(input);
         Period expectedPeriod = new Period(LocalDate.now().plusDays(1), false);
 
         assertThat(actual.getPeriod()).isEqualTo(expectedPeriod);
-        assertThat(actual.getAlgorithm()).isEqualTo(Algorithm_Types.LINEAR.getAlgorithm());
+        assertThat(actual.getAlgorithm()).isEqualTo(AlgorithmTypes.LINEAR.getAlgorithm());
         assertThat(actual.isGraph()).isFalse();
-        assertThat(actual.getCurrencyTypes()).isEqualTo(Collections.singletonList(Currency_Types.USD));
+        assertThat(actual.getCurrencyTypes()).isEqualTo(Collections.singletonList(CurrencyTypes.USD));
     }
 
 
     @Test
     void whenInputIsNotRateThenInvalid() {
-        assertThatThrownBy(() -> User_Command.createFromString("asd USD -date tomorrow -alg linear"))
-                .isInstanceOf(Invalid_Argument_Exception.class)
-                .hasMessageContaining(Error_Messages.INVALID_COMMAND.getText());
+        assertThatThrownBy(() -> UserCommand.createFromString("asd USD -date tomorrow -alg linear"))
+                .isInstanceOf(InvalidArgumentException.class)
+                .hasMessageContaining(ErrorMessages.INVALID_COMMAND.getText());
     }
 
     @Test
     void whenInputInvalidFormatThenError() {
-        assertThatThrownBy(() -> User_Command.createFromString("rate USD -date tomorrow dssad -alg linear"))
-                .isInstanceOf(Invalid_Argument_Exception.class)
-                .hasMessageContaining(Error_Messages.INVALID_INPUT_FORMAT.getText());
+        assertThatThrownBy(() -> UserCommand.createFromString("rate USD -date tomorrow dssad -alg linear"))
+                .isInstanceOf(InvalidArgumentException.class)
+                .hasMessageContaining(ErrorMessages.INVALID_INPUT_FORMAT.getText());
     }
 
     @Test
     void whenInputInvalidCurrencyThenError() {
-        assertThatThrownBy(() -> User_Command.createFromString("rate RUB -period month -alg linear -output graph"))
-                .isInstanceOf(Invalid_Currency_Exception.class)
-                .hasMessageContaining(Error_Messages.INVALID_CURRENCY.getText());
+        assertThatThrownBy(() -> UserCommand.createFromString("rate RUB -period month -alg linear -output graph"))
+                .isInstanceOf(InvalidCurrencyException.class)
+                .hasMessageContaining(ErrorMessages.INVALID_CURRENCY.getText());
     }
 
     @Test
     void whenInputInvalidDateThenError() {
-        assertThatThrownBy(() -> User_Command.createFromString("rate USD -date 25032022 -alg linear"))
-                .isInstanceOf(Invalid_Range_Exception.class)
-                .hasMessageContaining(Error_Messages.INVALID_DATE.getText());
+        assertThatThrownBy(() -> UserCommand.createFromString("rate USD -date 25032022 -alg linear"))
+                .isInstanceOf(InvalidRangeException.class)
+                .hasMessageContaining(ErrorMessages.INVALID_DATE.getText());
     }
 
     @Test
     void whenInputInvalidRangeThenError() {
-        assertThatThrownBy(() -> User_Command.createFromString("rate USD -period year -alg linear"))
-                .isInstanceOf(Invalid_Range_Exception.class)
-                .hasMessageContaining(Error_Messages.INVALID_PERIOD.getText());
+        assertThatThrownBy(() -> UserCommand.createFromString("rate USD -period year -alg linear"))
+                .isInstanceOf(InvalidRangeException.class)
+                .hasMessageContaining(ErrorMessages.INVALID_PERIOD.getText());
     }
 
     @Test
     void whenInputBothDateAndPeriodThenError() {
-        assertThatThrownBy(() -> User_Command.createFromString("rate USD -date tomorrow -period month -alg linear"))
-                .isInstanceOf(Invalid_Range_Exception.class)
-                .hasMessageContaining(Error_Messages.INVALID_DATE_AND_PERIOD.getText());
+        assertThatThrownBy(() -> UserCommand.createFromString("rate USD -date tomorrow -period month -alg linear"))
+                .isInstanceOf(InvalidRangeException.class)
+                .hasMessageContaining(ErrorMessages.INVALID_DATE_AND_PERIOD.getText());
     }
 
     @Test
     void whenInputNoDateOrPeriodThenError() {
-        assertThatThrownBy(() -> User_Command.createFromString("rate USD,EUR -alg linear -output graph"))
-                .isInstanceOf(Invalid_Range_Exception.class)
-                .hasMessageContaining(Error_Messages.INVALID_NO_DATE_OR_PERIOD.getText());
+        assertThatThrownBy(() -> UserCommand.createFromString("rate USD,EUR -alg linear -output graph"))
+                .isInstanceOf(InvalidRangeException.class)
+                .hasMessageContaining(ErrorMessages.INVALID_NO_DATE_OR_PERIOD.getText());
     }
 
     @Test
     void whenInputNoAlgThenError() {
-        assertThatThrownBy(() -> User_Command.createFromString("rate USD,EUR -period week -output graph"))
-                .isInstanceOf(Invalid_Algorithm_Exception.class)
-                .hasMessageContaining(Error_Messages.INVALID_NO_ALG.getText());
+        assertThatThrownBy(() -> UserCommand.createFromString("rate USD,EUR -period week -output graph"))
+                .isInstanceOf(InvalidAlgorithmException.class)
+                .hasMessageContaining(ErrorMessages.INVALID_NO_ALG.getText());
     }
 
     @Test
     void whenInputWrongAlgThenError() {
-        assertThatThrownBy(() -> User_Command.createFromString("rate USD -date tomorrow -alg wrong"))
-                .isInstanceOf(Invalid_Algorithm_Exception.class)
-                .hasMessageContaining(Error_Messages.INVALID_ALGORITHM.getText());
+        assertThatThrownBy(() -> UserCommand.createFromString("rate USD -date tomorrow -alg wrong"))
+                .isInstanceOf(InvalidAlgorithmException.class)
+                .hasMessageContaining(ErrorMessages.INVALID_ALGORITHM.getText());
     }
 
     @Test
     void whenInputMultipleCurrenciesAndNoOutputThenError() {
-        assertThatThrownBy(() -> User_Command.createFromString("rate USD,EUR -date tomorrow -alg linear"))
-                .isInstanceOf(Invalid_Currency_Exception.class)
-                .hasMessageContaining(Error_Messages.INVALID_NO_OUTPUT.getText());
+        assertThatThrownBy(() -> UserCommand.createFromString("rate USD,EUR -date tomorrow -alg linear"))
+                .isInstanceOf(InvalidCurrencyException.class)
+                .hasMessageContaining(ErrorMessages.INVALID_NO_OUTPUT.getText());
     }
 
     @Test
     void whenInputMultipleCurrenciesAndPeriodAndNoOutputThenError() {
-        assertThatThrownBy(() -> User_Command.createFromString("rate USD,EUR -period month -alg linear"))
-                .isInstanceOf(Invalid_Currency_Exception.class)
-                .hasMessageContaining(Error_Messages.INVALID_NO_OUTPUT.getText());
+        assertThatThrownBy(() -> UserCommand.createFromString("rate USD,EUR -period month -alg linear"))
+                .isInstanceOf(InvalidCurrencyException.class)
+                .hasMessageContaining(ErrorMessages.INVALID_NO_OUTPUT.getText());
     }
 
     @Test
     void whenInputMultipleCurrenciesAndPeriodAndWrongOutputThenError() {
-        assertThatThrownBy(() -> User_Command.createFromString("rate USD,EUR -period month -alg linear -output wrong"))
-                .isInstanceOf(Invalid_Output_Exception.class)
-                .hasMessageContaining(Error_Messages.INVALID_OUTPUT.getText());
+        assertThatThrownBy(() -> UserCommand.createFromString("rate USD,EUR -period month -alg linear -output wrong"))
+                .isInstanceOf(InvalidOutputException.class)
+                .hasMessageContaining(ErrorMessages.INVALID_OUTPUT.getText());
     }
 
     @Test
     void whenInputMoreThan5CurrenciesThenError() {
-        assertThatThrownBy(() -> User_Command.createFromString("rate USD,EUR,TRY,AMD,BGN,RUB -period month -alg linear -output graph"))
-                .isInstanceOf(Invalid_Currency_Exception.class)
-                .hasMessageContaining(Error_Messages.INVALID_CURRENCY_AMOUNT.getText());
+        assertThatThrownBy(() -> UserCommand.createFromString("rate USD,EUR,TRY,AMD,BGN,RUB -period month -alg linear -output graph"))
+                .isInstanceOf(InvalidCurrencyException.class)
+                .hasMessageContaining(ErrorMessages.INVALID_CURRENCY_AMOUNT.getText());
     }
 
     @Test
     void whenInputNoPeriodWhenOutputGraphThenError() {
-        assertThatThrownBy(() -> User_Command.createFromString("rate EUR -date tomorrow -alg linear -output graph"))
-                .isInstanceOf(Invalid_Range_Exception.class)
-                .hasMessageContaining(Error_Messages.INVALID_NO_PERIOD_WHEN_OUTPUT_GRAPH.getText());
+        assertThatThrownBy(() -> UserCommand.createFromString("rate EUR -date tomorrow -alg linear -output graph"))
+                .isInstanceOf(InvalidRangeException.class)
+                .hasMessageContaining(ErrorMessages.INVALID_NO_PERIOD_WHEN_OUTPUT_GRAPH.getText());
     }
 
     @Test
     void whenInputSameCurrencyMoreThan1TimeThenError() {
-        assertThatThrownBy(() -> User_Command.createFromString("rate USD,EUR,USD -period month -alg linear -output graph"))
-                .isInstanceOf(Invalid_Currency_Exception.class)
-                .hasMessageContaining(Error_Messages.INVALID_SAME_CURRENCY.getText());
+        assertThatThrownBy(() -> UserCommand.createFromString("rate USD,EUR,USD -period month -alg linear -output graph"))
+                .isInstanceOf(InvalidCurrencyException.class)
+                .hasMessageContaining(ErrorMessages.INVALID_SAME_CURRENCY.getText());
     }
 }

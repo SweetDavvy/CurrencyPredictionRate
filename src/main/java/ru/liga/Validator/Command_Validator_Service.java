@@ -1,9 +1,9 @@
 package ru.liga.Validator;
 
-import ru.liga.Algorithm.Currency_Forecaster;
+import ru.liga.Algorithm.CurrencyForecaster;
 import ru.liga.Input.Period;
-import ru.liga.Type.Command_Type;
-import ru.liga.Type.Currency_Types;
+import ru.liga.Type.CommandType;
+import ru.liga.Type.CurrencyTypes;
 
 import java.util.List;
 import java.util.Map;
@@ -17,22 +17,22 @@ public class Command_Validator_Service {
     }
 
     public Period validateAndGetPeriod() {
-        return new Period_Validator().validateAndGet(args);
+        return new PeriodValidator().validateAndGet(args);
     }
 
-    public Command_Type validateAndGetCommandType() {
-        return new Command_Type_Validator().validateAndGet(args);
+    public CommandType validateAndGetCommandType() {
+        return new CommandTypeValidator().validateAndGet(args);
     }
 
-    public List<Currency_Types> validateAndGetCurrency() {
-        return new Currency_Validator().validateAndGet(args);
+    public List<CurrencyTypes> validateAndGetCurrency() {
+        return new CurrencyValidator().validateAndGet(args);
     }
 
-    public Currency_Forecaster validateAndGetAlgorithm() {
-        return new Algorithm_Validator().validateAndGet(args);
+    public CurrencyForecaster validateAndGetAlgorithm() {
+        return new AlgorithmValidator().validateAndGet(args);
     }
 
     public Boolean validateAndGetOutput() {
-        return new Output_Validator().validateAndGet(args);
+        return new OutputValidator().validateAndGet(args);
     }
 }
