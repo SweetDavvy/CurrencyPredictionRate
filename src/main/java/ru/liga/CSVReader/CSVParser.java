@@ -1,4 +1,4 @@
-package ru.liga.CSV_Reader;
+package ru.liga.CSVReader;
 
 import ru.liga.Сurrency.CurrencyRate;
 import ru.liga.Type.CurrencyTypes;

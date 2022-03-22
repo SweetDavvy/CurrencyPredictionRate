@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
-import ru.liga.CSV_Reader.CSVParser;
+import ru.liga.CSVReader.CSVParser;
 import ru.liga.Input.*;
 import ru.liga.Repository.InMemoryCurrencyRepository;
 

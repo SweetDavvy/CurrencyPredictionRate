@@ -2,7 +2,7 @@ package ru.liga.Repository;
 
 import ru.liga.Сurrency.CurrencyRate;
 import ru.liga.Type.CurrencyTypes;
-import ru.liga.CSV_Reader.CurrencyParser;
+import ru.liga.CSVReader.CurrencyParser;
 
 import java.time.LocalDate;
 import java.util.EnumMap;
