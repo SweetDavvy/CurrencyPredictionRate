@@ -8,11 +8,11 @@ import ru.liga.Type.CurrencyTypes;
 import java.util.List;
 import java.util.Map;
 
-public class Command_Validator_Service {
+public class CommandValidatorService {
 
     private final Map<String, String> args;
 
-    public Command_Validator_Service(Map<String, String> args) {
+    public CommandValidatorService(Map<String, String> args) {
         this.args = args;
     }
 

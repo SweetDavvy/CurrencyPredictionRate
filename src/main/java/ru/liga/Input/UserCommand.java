@@ -32,14 +32,14 @@ public class UserCommand {
     }
 
     /**
-     * Создает корректный User_Command объект
+     * Создает корректный UserCommand объект
      * Если не работает во время проверки:
      * @throws BaseException - с сообщением об ошибке
      * @return UserCommand
      */
     public static UserCommand createFromString(String inputString) {
         Map<String, String> args = InputStringParser.parse(inputString);
-        Command_Validator_Service validator = new Command_Validator_Service(args);
+        CommandValidatorService validator = new CommandValidatorService(args);
         CommandType commandType = validator.validateAndGetCommandType();
         List<CurrencyTypes> currencyTypes = validator.validateAndGetCurrency();
         Period period = validator.validateAndGetPeriod();
